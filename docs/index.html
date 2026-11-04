@@ -54,9 +54,87 @@
   code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
   footer{margin-top:56px;text-align:center;color:var(--muted);font-size:13.5px}
   a{color:var(--accent)}
+
+  /* status colors (reserved) */
+  :root{--ok:#1a7f37;--ok-bg:#dafbe1;--bad:#cf222e;--bad-bg:#ffebe9;--warn:#9a6700;--warn-bg:#fff8c5}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ok:#3fb950;--ok-bg:#12261e;--bad:#f85149;--bad-bg:#2d1216;--warn:#d29922;--warn-bg:#272115}}
+  :root[data-theme="dark"]{--ok:#3fb950;--ok-bg:#12261e;--bad:#f85149;--bad-bg:#2d1216;--warn:#d29922;--warn-bg:#272115}
+
+  /* theme toggle */
+  #themeBtn{position:fixed;top:14px;right:14px;z-index:50;width:38px;height:38px;border-radius:50%;
+    border:1.5px solid var(--line);background:var(--card);color:var(--fg);font-size:17px;cursor:pointer}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){.reveal{transition:none;opacity:1;transform:none}
+    .minibar .fill,.meter .fill{transition:none}}
+
+  /* stat tiles */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 4px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+  .tile .big{font-size:33px;font-weight:800;letter-spacing:-.01em;line-height:1.15;font-variant-numeric:tabular-nums}
+  .tile .big .accent{color:var(--accent)}
+  .tile .sub{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .minibars{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+  .minibar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+  .minibar .lbl{width:68px;flex:none}
+  .minibar .track{flex:1;height:10px;border-radius:5px;background:var(--chip);overflow:hidden}
+  .minibar .fill{height:100%;border-radius:5px;width:0;transition:width 1s ease .2s}
+  .minibar .val{width:44px;flex:none;font-variant-numeric:tabular-nums;color:var(--fg)}
+  .meter{margin-top:14px;height:10px;border-radius:5px;background:var(--chip);overflow:hidden}
+  .meter .fill{height:100%;width:0;background:var(--accent);border-radius:5px;transition:width 1s ease .2s}
+  @media(max-width:700px){.stats{grid-template-columns:1fr}}
+
+  /* explorer */
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+  .pill{border:1.5px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;
+    padding:6px 13px;font-size:13px;cursor:pointer;font-family:inherit;line-height:1.3}
+  .pill.on{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+  .genGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:700px){.genGrid{grid-template-columns:repeat(2,1fr)}}
+  .genCard{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;
+    background:var(--card);padding:0;text-align:left;font-family:inherit;color:var(--fg)}
+  .genCard img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#fff}
+  .genCard .meta{padding:6px 8px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;gap:4px}
+  .genCard .meta b{font-weight:600}
+  .genCard.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+  .badge{display:inline-flex;border-radius:6px;padding:1px 7px;font-size:10.5px;font-weight:700;white-space:nowrap}
+  .b-pass{background:var(--ok-bg);color:var(--ok)}
+  .b-fail{background:var(--bad-bg);color:var(--bad)}
+  .b-hidden{background:var(--warn-bg);color:var(--warn)}
+  .detail{display:flex;gap:16px;margin-top:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:16px}
+  .detail>img{width:290px;max-width:38%;height:fit-content;border-radius:10px;border:1px solid var(--line);
+    background:#fff;cursor:zoom-in}
+  .detail .dright{flex:1;min-width:0}
+  .detail .dhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;font-weight:700}
+  .detail .dsum{font-size:13px;color:var(--muted);margin:2px 0 10px}
+  @media(max-width:700px){.detail{flex-direction:column}.detail>img{width:100%;max-width:100%}}
+  table.probes{width:100%;border-collapse:collapse;font-size:13px}
+  table.probes td{padding:5px 8px;border-top:1px solid var(--line);vertical-align:top}
+  table.probes tr.grp td{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--muted);padding-top:12px;border-top:none}
+  .ans{display:inline-block;border-radius:6px;padding:0 8px;font-weight:700;font-size:12px;white-space:nowrap}
+  .ans.ok{background:var(--ok-bg);color:var(--ok)}
+  .ans.bad{background:var(--bad-bg);color:var(--bad)}
+  .ans.na{background:var(--chip);color:var(--muted);font-weight:500}
+  .ans.exp{background:var(--chip);color:var(--muted);font-weight:600}
+
+  /* bibtex + lightbox */
+  .bibwrap{position:relative}
+  .copybtn{position:absolute;top:10px;right:10px;border:1.5px solid var(--line);background:var(--bg);
+    color:var(--fg);border-radius:8px;padding:4px 12px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit}
+  #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;
+    justify-content:center;z-index:100;cursor:zoom-out;padding:24px}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:min(1200px,96vw);max-height:92vh;border-radius:10px;background:#fff}
+  figure img{cursor:zoom-in}
 </style>
 </head>
 <body>
+<button id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">🌓</button>
 <div class="wrap">
 
 <header>
@@ -116,6 +194,33 @@
     violation. Reliability Routing reduces VLM–human diagnostic error from 24.4% to
     15.5% at 73.2% <span class="name">Accept</span> coverage.
   </p>
+
+  <div class="stats" id="stats">
+    <div class="tile">
+      <div class="big"><span class="accent" data-count="22.0" data-dec="1">0</span>%</div>
+      <div class="sub">of images that pass <b>all</b> positive required probes still contain a
+        human-confirmed ownership violation</div>
+    </div>
+    <div class="tile">
+      <div class="big"><span data-count="24.4" data-dec="1">0</span>% →
+        <span class="accent" data-count="15.5" data-dec="1">0</span>%</div>
+      <div class="sub">VLM–human diagnostic error, with Reliability Routing</div>
+      <div class="minibars">
+        <div class="minibar"><span class="lbl">VLM only</span>
+          <span class="track"><span class="fill" data-w="100" style="background:#8d96a0"></span></span>
+          <span class="val">24.4%</span></div>
+        <div class="minibar"><span class="lbl">+ Routing</span>
+          <span class="track"><span class="fill" data-w="63.5" style="background:var(--accent)"></span></span>
+          <span class="val">15.5%</span></div>
+      </div>
+    </div>
+    <div class="tile">
+      <div class="big"><span class="accent" data-count="73.2" data-dec="1">0</span>%</div>
+      <div class="sub">of judgments retained as reliable automatic
+        <span class="name">Accept</span> reports</div>
+      <div class="meter"><span class="fill" data-w="73.2"></span></div>
+    </div>
+  </div>
 </section>
 
 <section id="motivation">
@@ -134,6 +239,21 @@
   </figure>
 </section>
 
+<section id="explorer">
+  <h2>Explore the benchmark</h2>
+  <p class="muted" style="font-size:15px">
+    Pick a prompt, then click a generator's image. The probe table shows the released
+    human ground-truth answers: what positive-only checking verifies, and what the
+    ownership probes catch on top of it. 10 of the 400 prompts are shown here; the full
+    benchmark is on <a href="https://huggingface.co/datasets/jeehyunyu/PolarityVQA-Bench">🤗&nbsp;HuggingFace</a>.
+  </p>
+  <div id="explorer-body">
+    <div class="pills" id="pills"></div>
+    <div class="genGrid" id="genGrid"></div>
+    <div id="detail"></div>
+  </div>
+</section>
+
 <section id="overview">
   <h2>Method overview</h2>
   <figure>
@@ -150,10 +270,166 @@
   </figure>
 </section>
 
+<section id="bibtex">
+  <h2>Citation</h2>
+  <div class="bibwrap">
+    <button class="copybtn" id="copyBib">Copy</button>
+<pre id="bib"><code>@inproceedings{yu2027polarityvqa,
+  title     = {{PolarityVQA}: A Diagnostic Benchmark and Reliability-Aware Protocol
+               for Multi-Object Attribute Binding in Text-to-Image Evaluation},
+  author    = {Yu, Jihyun and Song, Mingyeong and Sung, Jaeyi and Kim, Soomin
+               and Bae, Wonho and Kim, Mingyu and Noh, Junhyug},
+  booktitle = {IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  year      = {2027}
+}</code></pre>
+  </div>
+</section>
+
 <footer>
   PolarityVQA · WACV 2027
 </footer>
 
 </div>
+
+<div id="lightbox" aria-hidden="true"><img alt=""></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- theme toggle ---------- */
+var root=document.documentElement, btn=document.getElementById('themeBtn');
+try{var saved=localStorage.getItem('pvqa-theme'); if(saved)root.setAttribute('data-theme',saved);}catch(e){}
+btn.addEventListener('click',function(){
+  var dark=root.getAttribute('data-theme')==='dark'||
+    (!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
+  var next=dark?'light':'dark';
+  root.setAttribute('data-theme',next);
+  try{localStorage.setItem('pvqa-theme',next);}catch(e){}
+});
+
+/* ---------- reveal on scroll + counters ---------- */
+var sections=document.querySelectorAll('section,figure');
+sections.forEach(function(s){s.classList.add('reveal');});
+function runCounters(scope){
+  scope.querySelectorAll('[data-count]').forEach(function(el){
+    if(el.dataset.done)return; el.dataset.done=1;
+    var target=parseFloat(el.dataset.count), dec=+(el.dataset.dec||0), t0=null;
+    function step(t){ if(!t0)t0=t; var p=Math.min((t-t0)/900,1);
+      el.textContent=(target*(1-Math.pow(1-p,3))).toFixed(dec);
+      if(p<1)requestAnimationFrame(step); else el.textContent=target.toFixed(dec); }
+    requestAnimationFrame(step);
+  });
+  scope.querySelectorAll('.fill[data-w]').forEach(function(el){el.style.width=el.dataset.w+'%';});
+}
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); runCounters(e.target); io.unobserve(e.target);} });
+  },{threshold:.15});
+  sections.forEach(function(s){io.observe(s);});
+}else{
+  sections.forEach(function(s){s.classList.add('in');}); runCounters(document);
+}
+
+/* ---------- lightbox ---------- */
+var lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img');
+function openLB(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('on');lb.setAttribute('aria-hidden','false');}
+lb.addEventListener('click',function(){lb.classList.remove('on');lb.setAttribute('aria-hidden','true');lbImg.src='';});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.click();});
+document.querySelectorAll('figure img').forEach(function(im){
+  im.addEventListener('click',function(){openLB(im.src,im.alt);});
+});
+
+/* ---------- bibtex copy ---------- */
+var cb=document.getElementById('copyBib');
+cb.addEventListener('click',function(){
+  var txt=document.getElementById('bib').textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject())
+    .then(function(){cb.textContent='Copied!';setTimeout(function(){cb.textContent='Copy';},1500);})
+    .catch(function(){cb.textContent='Select & copy';});
+});
+
+/* ---------- explorer ---------- */
+var GENS=["sd1_5","sdxl_base","sd3","sd3_5","flux_dev","itercomp","bidpo","ospo_janus_pro_7b"];
+var GL={sd1_5:"SD 1.5",sdxl_base:"SDXL",sd3:"SD 3",sd3_5:"SD 3.5",flux_dev:"FLUX.1-dev",
+        itercomp:"IterComp",bidpo:"BiDPO",ospo_janus_pro_7b:"OSPO-Janus"};
+var GROUPS=[["Required probes",["existence","positive_attribute","count"]],
+            ["Ownership probes",["negative_ownership"]],
+            ["Absent-object controls",["easy_aep","hard_aep"]]];
+var DATA=null, curP=0, curG=null;
+function verdict(g){ if(!g.pos)return{k:'fail',lab:'Positive probe FAIL'};
+  if(g.ov)return{k:'hidden',lab:'Hidden violation'}; return{k:'pass',lab:'Pass'}; }
+function imgSrc(pid,gen){return 'assets/explorer/'+pid+'__'+gen+'.webp';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function renderPills(){
+  var el=document.getElementById('pills');
+  el.innerHTML=DATA.map(function(d,i){
+    return '<button class="pill'+(i===curP?' on':'')+'" data-i="'+i+'">“'+esc(d.prompt)+'”</button>';
+  }).join('');
+  el.querySelectorAll('.pill').forEach(function(b){
+    b.addEventListener('click',function(){curP=+b.dataset.i;curG=null;renderPills();renderGrid();});
+  });
+}
+function renderGrid(){
+  var d=DATA[curP];
+  if(curG===null){
+    curG=GENS.find(function(g){var v=d.gens[g];return v.pos&&v.ov;})||GENS[0];
+  }
+  var el=document.getElementById('genGrid');
+  el.innerHTML=GENS.map(function(g){
+    var v=verdict(d.gens[g]);
+    var badge=v.k==='pass'?'<span class="badge b-pass">✓ pass</span>':
+              v.k==='fail'?'<span class="badge b-fail">✗ fail</span>':
+                           '<span class="badge b-hidden">⚠ hidden</span>';
+    return '<button class="genCard'+(g===curG?' sel':'')+'" data-g="'+g+'">'+
+      '<img loading="lazy" src="'+imgSrc(d.pid,g)+'" alt="'+esc(GL[g])+' image for '+esc(d.prompt)+'">'+
+      '<span class="meta"><b>'+GL[g]+'</b>'+badge+'</span></button>';
+  }).join('');
+  el.querySelectorAll('.genCard').forEach(function(c){
+    c.addEventListener('click',function(){curG=c.dataset.g;renderGrid();});
+  });
+  renderDetail();
+}
+function renderDetail(){
+  var d=DATA[curP], g=d.gens[curG], v=verdict(g);
+  var badge=v.k==='pass'?'<span class="badge b-pass">✓ '+v.lab+'</span>':
+            v.k==='fail'?'<span class="badge b-fail">✗ '+v.lab+'</span>':
+                         '<span class="badge b-hidden">⚠ '+v.lab+'</span>';
+  var sum=v.k==='hidden'?
+      'Every positive required probe passes — a positive-only protocol reports success. '+
+      'The ownership probe shows the attribute also appears on a non-owner object.':
+    v.k==='pass'?'All required probes pass and no ownership violation is detected.':
+      'At least one required probe already fails, so positive-only checking catches this one.';
+  var rows='';
+  GROUPS.forEach(function(grp){
+    var qs=d.questions.filter(function(q){return grp[1].indexOf(q.type)>=0;});
+    if(!qs.length)return;
+    rows+='<tr class="grp"><td colspan="3">'+grp[0]+'</td></tr>';
+    qs.forEach(function(q){
+      var a=g.a[q.qid];
+      var cell=a==null?'<span class="ans na">—</span>':
+        '<span class="ans '+(a===q.exp?'ok':'bad')+'">'+esc(a)+'</span>';
+      rows+='<tr><td>'+esc(q.q)+'</td><td><span class="ans exp">exp '+esc(q.exp)+'</span></td><td>'+cell+'</td></tr>';
+    });
+  });
+  document.getElementById('detail').innerHTML=
+    '<div class="detail"><img id="detailImg" src="'+imgSrc(d.pid,curG)+'" alt="'+esc(GL[curG])+' image">'+
+    '<div class="dright"><div class="dhead">'+GL[curG]+' '+badge+'</div>'+
+    '<div class="dsum">'+sum+'</div>'+
+    '<table class="probes"><tbody>'+rows+'</tbody></table>'+
+    '<div class="dsum" style="margin-top:8px">exp = expected answer · colored cell = human ground-truth answer'+
+    ' (green: matches, red: mismatch) · — = no released human label</div></div></div>';
+  var di=document.getElementById('detailImg');
+  di.style.cursor='zoom-in';
+  di.addEventListener('click',function(){openLB(di.src,di.alt);});
+}
+fetch('assets/explorer/data.json').then(function(r){return r.json();}).then(function(j){
+  DATA=j; renderPills(); renderGrid();
+}).catch(function(){
+  document.getElementById('explorer-body').innerHTML=
+    '<p class="muted">The interactive explorer could not load. Browse the full dataset on '+
+    '<a href="https://huggingface.co/datasets/jeehyunyu/PolarityVQA-Bench">HuggingFace</a>.</p>';
+});
+})();
+</script>
 </body>
 </html>
