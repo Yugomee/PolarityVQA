@@ -269,8 +269,7 @@ var GENS=["sd1_5","sdxl_base","sd3","sd3_5","flux_dev","itercomp","bidpo","ospo_
 var GL={sd1_5:"SD 1.5",sdxl_base:"SDXL",sd3:"SD 3",sd3_5:"SD 3.5",flux_dev:"FLUX.1-dev",
         itercomp:"IterComp",bidpo:"BiDPO",ospo_janus_pro_7b:"OSPO-Janus"};
 var GROUPS=[["Required probes",["existence","positive_attribute","count"]],
-            ["Ownership probes",["negative_ownership"]],
-            ["Absent-object controls",["easy_aep","hard_aep"]]];
+            ["Ownership probes",["negative_ownership"]]];
 var DATA=null, curP=0, curG=null;
 function verdict(g){ if(!g.pos)return{k:'fail',lab:'Positive probe FAIL'};
   if(g.ov)return{k:'hidden',lab:'Hidden violation'}; return{k:'pass',lab:'Pass'}; }
@@ -333,7 +332,7 @@ function renderDetail(){
     '<div class="dsum">'+sum+'</div>'+
     '<table class="probes"><tbody>'+rows+'</tbody></table>'+
     '<div class="dsum" style="margin-top:8px">exp = expected answer · colored cell = human ground-truth answer'+
-    ' (green: matches, red: mismatch) · — = no released human label</div></div></div>';
+    ' (green: matches, red: mismatch)</div></div></div>';
   var di=document.getElementById('detailImg');
   di.style.cursor='zoom-in';
   di.addEventListener('click',function(){openLB(di.src,di.alt);});
