@@ -10,16 +10,6 @@
     --bg:#ffffff; --fg:#1b1f24; --muted:#57606a; --card:#f6f8fa; --line:#d8dee4;
     --accent:#0b57d0; --accent-fg:#ffffff; --chip:#eef2f7;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0d1117; --fg:#e6edf3; --muted:#9da7b3; --card:#161b22; --line:#30363d;
-      --accent:#4c8dff; --accent-fg:#0d1117; --chip:#1f2630;
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0d1117; --fg:#e6edf3; --muted:#9da7b3; --card:#161b22; --line:#30363d;
-    --accent:#4c8dff; --accent-fg:#0d1117; --chip:#1f2630;
-  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--fg);
        font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
@@ -57,35 +47,11 @@
 
   /* status colors (reserved) */
   :root{--ok:#1a7f37;--ok-bg:#dafbe1;--bad:#cf222e;--bad-bg:#ffebe9;--warn:#9a6700;--warn-bg:#fff8c5}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-    --ok:#3fb950;--ok-bg:#12261e;--bad:#f85149;--bad-bg:#2d1216;--warn:#d29922;--warn-bg:#272115}}
-  :root[data-theme="dark"]{--ok:#3fb950;--ok-bg:#12261e;--bad:#f85149;--bad-bg:#2d1216;--warn:#d29922;--warn-bg:#272115}
-
-  /* theme toggle */
-  #themeBtn{position:fixed;top:14px;right:14px;z-index:50;width:38px;height:38px;border-radius:50%;
-    border:1.5px solid var(--line);background:var(--card);color:var(--fg);font-size:17px;cursor:pointer}
 
   /* reveal on scroll */
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion: reduce){.reveal{transition:none;opacity:1;transform:none}
-    .minibar .fill,.meter .fill{transition:none}}
-
-  /* stat tiles */
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 4px}
-  .tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
-  .tile .big{font-size:33px;font-weight:800;letter-spacing:-.01em;line-height:1.15;font-variant-numeric:tabular-nums}
-  .tile .big .accent{color:var(--accent)}
-  .tile .sub{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
-  .minibars{margin-top:12px;display:flex;flex-direction:column;gap:7px}
-  .minibar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
-  .minibar .lbl{width:68px;flex:none}
-  .minibar .track{flex:1;height:10px;border-radius:5px;background:var(--chip);overflow:hidden}
-  .minibar .fill{height:100%;border-radius:5px;width:0;transition:width 1s ease .2s}
-  .minibar .val{width:44px;flex:none;font-variant-numeric:tabular-nums;color:var(--fg)}
-  .meter{margin-top:14px;height:10px;border-radius:5px;background:var(--chip);overflow:hidden}
-  .meter .fill{height:100%;width:0;background:var(--accent);border-radius:5px;transition:width 1s ease .2s}
-  @media(max-width:700px){.stats{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion: reduce){.reveal{transition:none;opacity:1;transform:none}}
 
   /* explorer */
   .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
@@ -134,7 +100,6 @@
 </style>
 </head>
 <body>
-<button id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">🌓</button>
 <div class="wrap">
 
 <header>
@@ -194,33 +159,6 @@
     violation. Reliability Routing reduces VLM–human diagnostic error from 24.4% to
     15.5% at 73.2% <span class="name">Accept</span> coverage.
   </p>
-
-  <div class="stats" id="stats">
-    <div class="tile">
-      <div class="big"><span class="accent" data-count="22.0" data-dec="1">0</span>%</div>
-      <div class="sub">of images that pass <b>all</b> positive required probes still contain a
-        human-confirmed ownership violation</div>
-    </div>
-    <div class="tile">
-      <div class="big"><span data-count="24.4" data-dec="1">0</span>% →
-        <span class="accent" data-count="15.5" data-dec="1">0</span>%</div>
-      <div class="sub">VLM–human diagnostic error, with Reliability Routing</div>
-      <div class="minibars">
-        <div class="minibar"><span class="lbl">VLM only</span>
-          <span class="track"><span class="fill" data-w="100" style="background:#8d96a0"></span></span>
-          <span class="val">24.4%</span></div>
-        <div class="minibar"><span class="lbl">+ Routing</span>
-          <span class="track"><span class="fill" data-w="63.5" style="background:var(--accent)"></span></span>
-          <span class="val">15.5%</span></div>
-      </div>
-    </div>
-    <div class="tile">
-      <div class="big"><span class="accent" data-count="73.2" data-dec="1">0</span>%</div>
-      <div class="sub">of judgments retained as reliable automatic
-        <span class="name">Accept</span> reports</div>
-      <div class="meter"><span class="fill" data-w="73.2"></span></div>
-    </div>
-  </div>
 </section>
 
 <section id="motivation">
@@ -244,7 +182,7 @@
   <p class="muted" style="font-size:15px">
     Pick a prompt, then click a generator's image. The probe table shows the released
     human ground-truth answers: what positive-only checking verifies, and what the
-    ownership probes catch on top of it. 10 of the 400 prompts are shown here; the full
+    ownership probes catch on top of it. 5 of the 400 prompts are shown here; the full
     benchmark is on <a href="https://huggingface.co/datasets/jeehyunyu/PolarityVQA-Bench">🤗&nbsp;HuggingFace</a>.
   </p>
   <div id="explorer-body">
@@ -296,38 +234,16 @@
 <script>
 (function(){
 "use strict";
-/* ---------- theme toggle ---------- */
-var root=document.documentElement, btn=document.getElementById('themeBtn');
-try{var saved=localStorage.getItem('pvqa-theme'); if(saved)root.setAttribute('data-theme',saved);}catch(e){}
-btn.addEventListener('click',function(){
-  var dark=root.getAttribute('data-theme')==='dark'||
-    (!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
-  var next=dark?'light':'dark';
-  root.setAttribute('data-theme',next);
-  try{localStorage.setItem('pvqa-theme',next);}catch(e){}
-});
-
-/* ---------- reveal on scroll + counters ---------- */
+/* ---------- reveal on scroll ---------- */
 var sections=document.querySelectorAll('section,figure');
 sections.forEach(function(s){s.classList.add('reveal');});
-function runCounters(scope){
-  scope.querySelectorAll('[data-count]').forEach(function(el){
-    if(el.dataset.done)return; el.dataset.done=1;
-    var target=parseFloat(el.dataset.count), dec=+(el.dataset.dec||0), t0=null;
-    function step(t){ if(!t0)t0=t; var p=Math.min((t-t0)/900,1);
-      el.textContent=(target*(1-Math.pow(1-p,3))).toFixed(dec);
-      if(p<1)requestAnimationFrame(step); else el.textContent=target.toFixed(dec); }
-    requestAnimationFrame(step);
-  });
-  scope.querySelectorAll('.fill[data-w]').forEach(function(el){el.style.width=el.dataset.w+'%';});
-}
 if('IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); runCounters(e.target); io.unobserve(e.target);} });
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:.15});
   sections.forEach(function(s){io.observe(s);});
 }else{
-  sections.forEach(function(s){s.classList.add('in');}); runCounters(document);
+  sections.forEach(function(s){s.classList.add('in');});
 }
 
 /* ---------- lightbox ---------- */
